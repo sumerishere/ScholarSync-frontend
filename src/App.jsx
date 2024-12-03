@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Nav from './components/Nav-bar/NavBar';
 import AsideBar from './components/Aside-bar/AsideBar';
 import Home from './components/Home-page/HomePage';
+import Batches from './components/Batches/Batches';
 
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/dashboard" element={<div>Dashboard Content</div>} />
-              <Route path="/batches" element={<div>Batches Content</div>} />
+              <Route path="/batches" element={<Batches/>} />
               <Route path="/students" element={<div>Students Content</div>} />
               <Route path="/trainer" element={<div>Trainer Content</div>} />
               <Route path="/reports" element={<div>Reports Content</div>} />
