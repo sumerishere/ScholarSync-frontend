@@ -1,0 +1,45 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Custom styles */
+.scholar-nav {
+  width: 100%;
+  background-color: white;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.navbar-container {
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+}
+
+.scholar-profile-section {
+  transition: all 0.2s ease;
+  border: 1px solid #e5e7eb;
+}
+
+.scholar-profile-section:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.scholar-avatar {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f3f4f6;
+  overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .navbar-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .scholar-profile-section {
+    padding: 0.5rem;
+  }
+}
