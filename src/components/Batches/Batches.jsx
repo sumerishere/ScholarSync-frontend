@@ -1,8 +1,12 @@
 import { Plus, UserPlus, Users, X } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 const Batches = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isStudentModalOpen, setIsStudentModalOpen] = useState(false);
+  const [cardDetails, setCardDetails] = useState(false);
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     batchName: "",
@@ -189,6 +193,10 @@ const Batches = () => {
     }));
   };
 
+  if(cardDetails){
+    navigate("/batches/details");
+  }
+
   return (
     <div className="scholar-batches p-6">
       {/* Header with Add Batch button */}
@@ -225,7 +233,7 @@ const Batches = () => {
             className="scholar-batch-card bg-white rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300"
           >
             {/* Card Header */}
-            <div className="p-6 border-b border-gray-100">
+            <div onClick={()=>{setCardDetails(true)}} className="p-6 border-b cursor-pointer  border-gray-200">
               <h3 className="text-lg font-semibold text-gray-800 mb-2">
                 {batch.name}
               </h3>

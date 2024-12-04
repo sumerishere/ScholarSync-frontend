@@ -5,6 +5,7 @@ import Nav from './components/Nav-bar/NavBar';
 import AsideBar from './components/Aside-bar/AsideBar';
 import Home from './components/Home-page/HomePage';
 import Batches from './components/Batches/Batches';
+import BatchDetails from './components/Batches/BatchDetails';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/dashboard" element={<div>Dashboard Content</div>} />
               <Route path="/batches" element={<Batches/>} />
+              <Route path="/batches/details" element={<BatchDetails/>}/>
               <Route path="/students" element={<div>Students Content</div>} />
               <Route path="/trainer" element={<div>Trainer Content</div>} />
               <Route path="/reports" element={<div>Reports Content</div>} />
