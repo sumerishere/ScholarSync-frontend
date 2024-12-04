@@ -1,30 +1,32 @@
 // import { useState } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import { NavLink } from 'react-router-dom';
 import {
-  LayoutDashboard,
-  Users,
   BookOpen,
-  UserCog,
-  FileBarChart,
   ChevronLeft,
-  ChevronRight
-} from 'lucide-react';
+  ChevronRight,
+  FileBarChart,
+  LayoutDashboard,
+  Settings,
+  UserCog,
+  Users,
+} from "lucide-react";
+import { NavLink } from "react-router-dom";
 
 const AsideBar = ({ isCollapsed, setIsCollapsed }) => {
   const menuItems = [
-    { path: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-    { path: '/batches', icon: BookOpen, label: 'Batches' },
-    { path: '/students', icon: Users, label: 'Students' },
-    { path: '/trainer', icon: UserCog, label: 'Trainer' },
-    { path: '/reports', icon: FileBarChart, label: 'Reports' },
+    { path: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
+    { path: "/batches", icon: BookOpen, label: "Batches" },
+    { path: "/students", icon: Users, label: "Students" },
+    { path: "/trainer", icon: UserCog, label: "Trainers" },
+    { path: "/reports", icon: FileBarChart, label: "Reports" },
+    { path: "/logout", icon: Settings, label: "LogOut" },
   ];
 
   return (
-    <aside 
+    <aside
       className={`scholar-sidebar bg-indigo-800 text-white transition-all duration-300 ${
-        isCollapsed ? 'w-20' : 'w-64'
+        isCollapsed ? "w-20" : "w-64"
       }`}
     >
       <div className="scholar-sidebar-header flex justify-end p-4">
@@ -35,7 +37,7 @@ const AsideBar = ({ isCollapsed, setIsCollapsed }) => {
           {isCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
         </button>
       </div>
-      
+
       <nav className="scholar-sidebar-nav mt-6">
         {menuItems.map((item) => (
           <NavLink
@@ -43,11 +45,11 @@ const AsideBar = ({ isCollapsed, setIsCollapsed }) => {
             to={item.path}
             className={({ isActive }) =>
               `scholar-nav-item flex items-center p-4 hover:bg-indigo-700 ${
-                isActive ? 'bg-indigo-700' : ''
+                isActive ? "bg-indigo-700" : ""
               }`
             }
           >
-            <item.icon size={20} />
+            <item.icon size={25} />
             {!isCollapsed && (
               <span className="ml-4 scholar-nav-label">{item.label}</span>
             )}
@@ -57,7 +59,6 @@ const AsideBar = ({ isCollapsed, setIsCollapsed }) => {
     </aside>
   );
 };
-
 
 // PropTypes validation
 AsideBar.propTypes = {

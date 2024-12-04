@@ -3,10 +3,11 @@ import { useState } from "react";
 const Batches = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isStudentModalOpen, setIsStudentModalOpen] = useState(false);
-  
 
   const [formData, setFormData] = useState({
     batchName: "",
+    subject: "",
+    trainerName: "",
     startDate: "",
   });
 
@@ -23,42 +24,48 @@ const Batches = () => {
   const batchesData = [
     {
       id: 1,
-      name: "Full Stack Development",
+      name: "Larkspur23A",
+      subject: "Full Stack Development",
       totalStudents: 25,
       startDate: "2024-01-15",
       batchCode: "#3030",
     },
     {
       id: 2,
-      name: "Data Science",
+      name: "Aster24",
+      subject: "Data Science",
       totalStudents: 18,
       startDate: "2024-02-01",
       batchCode: "#3030",
     },
     {
       id: 3,
-      name: "UI/UX Design",
+      name: "Piony24",
+      subject: "UI/UX Design",
       totalStudents: 20,
       startDate: "2024-02-15",
       batchCode: "#3030",
     },
     {
       id: 4,
-      name: "DevOps Engineering",
+      name: "Carnation23",
+      subject: "DevOps Engineering",
       totalStudents: 15,
       startDate: "2024-03-01",
       batchCode: "#3030",
     },
     {
       id: 5,
-      name: "Mobile Development",
+      name: "Daisy24R",
+      subject: "Mobile Development",
       totalStudents: 22,
       startDate: "2024-03-15",
       batchCode: "#3030",
     },
     {
       id: 6,
-      name: "Automation Testing",
+      name: "Aster24F",
+      subject: "Automation Testing",
       totalStudents: 32,
       startDate: "2024-03-15",
       batchCode: "#3030",
@@ -154,11 +161,54 @@ const Batches = () => {
     }
   };
 
+  //----------- mobile validation ---------------------//
+
+  const handleMobileChange = (e) => {
+    const { name, value } = e.target;
+    const numericValue = value.replace(/\D/g, "").slice(0, 10);
+
+    setStudentFormData((prevState) => ({
+      ...prevState,
+      [name]: numericValue,
+    }));
+  };
+
+  //------------- fees validation --------------//
+  const handleFeesChange = (e) => {
+    const { name, value } = e.target;
+
+    // Only accept and store numbers, completely ignore any other character
+    const numericValue = value
+      .split("")
+      .filter((char) => /[0-9]/.test(char))
+      .join("");
+
+    setStudentFormData((prevState) => ({
+      ...prevState,
+      [name]: numericValue,
+    }));
+  };
+
   return (
     <div className="scholar-batches p-6">
       {/* Header with Add Batch button */}
       <div className="mb-6 flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-800">Batches</h2>
+        <h2 className="text-2xl font-bold text-gray-800">
+          Your Batches ({batchesData.length})
+        </h2>
+        <div>
+          <input
+            className="w-half px-4 py-1 mr-1 border outline-none  rounded-lg focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400"
+            type="text"
+            name=""
+            id=""
+            placeholder="Search Batch"
+          />
+
+          <button className="scholar-add-student-btn w-half bg-indigo-600 hover:bg-indigo-700 text-white py-1 px-5 rounded-lg transition-colors duration-200">
+            Search
+          </button>
+        </div>
         <button
           onClick={() => setIsModalOpen(true)}
           className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors duration-200"
@@ -179,7 +229,10 @@ const Batches = () => {
               <h3 className="text-lg font-semibold text-gray-800 mb-2">
                 {batch.name}
               </h3>
-              <p className="text-sm text-black-600">
+              <h4 className="text-md font-semibold text-indigo-600 text-gray-800 mb-2">
+                Subject : {batch.subject}
+              </h4>
+              <p className="text-sm font-semibold text-black-600">
                 Batch Code: {batch.batchCode}
               </p>
               <p className="text-sm text-gray-500">
@@ -190,8 +243,10 @@ const Batches = () => {
             {/* Card Body */}
             <div className="p-6 space-y-4">
               {/* Add Student Button */}
-              <button className="scholar-add-student-btn w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg transition-colors duration-200"
-              onClick={() => setIsStudentModalOpen(true)}>
+              <button
+                className="scholar-add-student-btn w-half flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg transition-colors duration-200"
+                onClick={() => setIsStudentModalOpen(true)}
+              >
                 <UserPlus size={20} />
                 <span>Add Student</span>
               </button>
@@ -238,8 +293,47 @@ const Batches = () => {
                 <input
                   type="text"
                   id="batchName"
+                  placeholder="Enter batch name"
                   name="batchName"
                   value={formData.batchName}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="startDate"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Subject
+                </label>
+                <input
+                  type="text"
+                  id="subject"
+                  placeholder="Enter subject"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="startDate"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Trainer Name
+                </label>
+                <input
+                  type="text"
+                  id="trainerName"
+                  placeholder="Enter Trainer Name"
+                  name="trainerName"
+                  value={formData.trainerName}
                   onChange={handleInputChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   required
@@ -276,7 +370,7 @@ const Batches = () => {
                   type="submit"
                   className="flex-1 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors duration-200"
                 >
-                  Add Batch
+                  Add Batch 😊
                 </button>
               </div>
             </form>
@@ -312,6 +406,7 @@ const Batches = () => {
                   type="text"
                   id="studentName"
                   name="studentName"
+                  placeholder="Enter Name"
                   value={studentFormData.studentName}
                   onChange={handleStudentInputChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
@@ -329,9 +424,12 @@ const Batches = () => {
                 <input
                   type="tel"
                   id="mobileNumber"
+                  placeholder="Enter Mobile Number"
                   name="mobileNumber"
                   value={studentFormData.mobileNumber}
-                  onChange={handleStudentInputChange}
+                  pattern="[0-9]{10}"
+                  maxLength="10"
+                  onChange={handleMobileChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   required
                 />
@@ -347,6 +445,7 @@ const Batches = () => {
                 <input
                   type="email"
                   id="email"
+                  placeholder="Enter Email"
                   name="email"
                   value={studentFormData.email}
                   onChange={handleStudentInputChange}
@@ -365,6 +464,7 @@ const Batches = () => {
                 <textarea
                   id="address"
                   name="address"
+                  placeholder="Enter Address"
                   value={studentFormData.address}
                   onChange={handleStudentInputChange}
                   rows={3}
@@ -383,6 +483,7 @@ const Batches = () => {
                 <input
                   type="text"
                   id="qualification"
+                  placeholder="Enter Qualification"
                   name="qualification"
                   value={studentFormData.qualification}
                   onChange={handleStudentInputChange}
@@ -399,11 +500,12 @@ const Batches = () => {
                   Fees Paid
                 </label>
                 <input
-                  type="number"
+                  type="tel"
                   id="feesPaid"
+                  placeholder="Enter Fees"
                   name="feesPaid"
                   value={studentFormData.feesPaid}
-                  onChange={handleStudentInputChange}
+                  onChange={handleFeesChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   required
                 />
