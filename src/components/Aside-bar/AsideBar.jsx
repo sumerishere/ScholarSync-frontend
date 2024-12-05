@@ -6,6 +6,7 @@ import {
   ChevronLeft,
   ChevronRight,
   FileBarChart,
+  FileTextIcon,
   LayoutDashboard,
   Settings,
   UserCog,
@@ -19,8 +20,9 @@ const AsideBar = ({ isCollapsed, setIsCollapsed }) => {
     { path: "/batches", icon: BookOpen, label: "Batches" },
     { path: "/students", icon: Users, label: "Students" },
     { path: "/trainer", icon: UserCog, label: "Trainers" },
+    { path: "/invoice", icon: FileTextIcon, label: "Invoice" },
     { path: "/reports", icon: FileBarChart, label: "Reports" },
-    { path: "/logout", icon: Settings, label: "LogOut" },
+    { path: "/login", icon: Settings, label: "LogOut" },
   ];
 
   return (

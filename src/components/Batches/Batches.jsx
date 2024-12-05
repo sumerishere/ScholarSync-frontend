@@ -1,7 +1,10 @@
 import { Plus, UserPlus, Users, X } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+
 const Batches = () => {
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isStudentModalOpen, setIsStudentModalOpen] = useState(false);
   const [cardDetails, setCardDetails] = useState(false);

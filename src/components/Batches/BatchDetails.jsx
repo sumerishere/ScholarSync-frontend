@@ -11,6 +11,32 @@ const BatchDetails = () => {
     startDate: "2024-12-05",
   });
 
+  // Temporary student data
+  // const [students] = useState([
+  //   {
+  //     id: 1,
+  //     studentName: "Alice Johnson",
+  //     mobileNumber: "9876543210",
+  //     address: "123 Tech Street, Coding City",
+  //     email: "alice@example.com",
+  //     qualification: "B.Tech",
+  //     feesPaid: 25000,
+  //     totalFees: 45000,
+  //     discount: 5000,
+  //   },
+  //   {
+  //     id: 2,
+  //     studentName: "Bob Smith",
+  //     mobileNumber: "9876543211",
+  //     address: "456 Dev Avenue, Program Town",
+  //     email: "bob@example.com",
+  //     qualification: "MCA",
+  //     feesPaid: 30000,
+  //     totalFees: 45000,
+  //     discount: 3000,
+  //   },
+  // ]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -32,7 +58,7 @@ const BatchDetails = () => {
 
   return (
     <div className="relative bg-white p-6 rounded-lg shadow-md batch-details-root">
-      <div className="batch-details-header mb-6 flex justify-between items-center">
+      <div className="batch-details-header mb-5 flex justify-between items-center">
         <h2 className="text-2xl font-semibold text-gray-800">Batch Details</h2>
         {!isEditing && (
           <button
@@ -43,11 +69,12 @@ const BatchDetails = () => {
           </button>
         )}
       </div>
+      <hr />
 
       {/* Overlay */}
       {isEditing && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-8 rounded-lg w-full max-w-4xl mx-4">
+          <div className="bg-white p-7 rounded-lg w-full max-w-2xl mx-4">
             <h3 className="text-xl font-semibold mb-6">Edit Batch Details</h3>
 
             <form onSubmit={handleSubmit} className="batch-edit-form">
@@ -193,14 +220,18 @@ const BatchDetails = () => {
             <span className="block text-lg font-medium text-gray-500">
               Subject
             </span>
-            <span className="block mt-1 font-semibold text-gray-900">{formData.subject}</span>
+            <span className="block mt-1 font-semibold text-gray-900">
+              {formData.subject}
+            </span>
           </div>
 
           <div className="batch-display-item mb-4">
             <span className="block text-lg font-medium text-gray-500">
               Trainer Assigned
             </span>
-            <span className="block mt-1 font-semibold text-gray-900">{formData.trainer}</span>
+            <span className="block mt-1 font-semibold text-gray-900">
+              {formData.trainer}
+            </span>
           </div>
 
           <div className="batch-display-item mb-4">
@@ -213,6 +244,8 @@ const BatchDetails = () => {
           </div>
         </div>
       </div>
+
+      
     </div>
   );
 };
