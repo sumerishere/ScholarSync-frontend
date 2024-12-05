@@ -8,6 +8,19 @@ const StudentsDetails = () => {
           <h2 className="text-xl font-semibold text-gray-800">
             Student Details
           </h2>
+          <div className="flex justify-evenly items-center mt-5">
+            <input
+              className="w-full px-4 py-1 mr-1 border outline-none rounded-lg focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400"
+              type="text"
+              name=""
+              id=""
+              placeholder="Search student by mobile/email"
+            />
+
+            <button className="scholar-add-student-btn w-half bg-indigo-600 hover:bg-indigo-700 text-white py-1 px-5 rounded-lg transition-colors duration-200">
+              Search
+            </button>
+          </div>
         </div>
         <div className="max-h-[500px] overflow-y-auto">
           <table className="min-w-full divide-y divide-gray-200">

@@ -10,6 +10,7 @@ import Invoice from "./components/Invoice/Invoice";
 import LoginForm from "./components/Login/LoginForm";
 
 const PrivateRoute = ({ children }) => {
+  
   const [isCollapsed, setIsCollapsed] = useState(false);
   const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
   
@@ -97,7 +98,7 @@ function App() {
               <Invoice />
             </PrivateRoute>
           }
-          
+
         />
       </Routes>
     </Router>
