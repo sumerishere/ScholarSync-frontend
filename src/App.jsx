@@ -8,6 +8,7 @@ import Home from "./components/Home-page/HomePage";
 import Nav from "./components/Nav-bar/NavBar";
 import Invoice from "./components/Invoice/Invoice";
 import LoginForm from "./components/Login/LoginForm";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 const PrivateRoute = ({ children }) => {
   
@@ -36,7 +37,7 @@ function App() {
         <Route path="/login" element={<LoginForm />} />
         
         <Route 
-          path="/" 
+          path="/"
           element={
             <PrivateRoute>
               <Home />
@@ -47,7 +48,7 @@ function App() {
           path="/dashboard" 
           element={
             <PrivateRoute>
-              <div>Dashboard Content</div>
+              <Dashboard/>
             </PrivateRoute>
           } 
         />

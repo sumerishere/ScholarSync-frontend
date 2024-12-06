@@ -1,0 +1,15 @@
+/* styles.css */
+:root {
+  --background-color: #ffffff; /* Light mode background */
+  --text-color: #000000; /* Light mode text */
+}
+
+[data-theme="dark"] {
+  --background-color: #000000; /* Dark mode background */
+  --text-color: #ffffff; /* Dark mode text */
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}

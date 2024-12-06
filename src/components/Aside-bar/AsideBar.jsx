@@ -1,6 +1,4 @@
-// import { useState } from 'react';
 import PropTypes from "prop-types";
-
 import {
   BookOpen,
   ChevronLeft,
@@ -12,9 +10,19 @@ import {
   UserCog,
   Users,
 } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const AsideBar = ({ isCollapsed, setIsCollapsed }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Remove authentication status from localStorage
+    localStorage.removeItem("isAuthenticated");
+    
+    // Redirect to login page
+    navigate("/login");
+  };
+  
   const menuItems = [
     { path: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
     { path: "/batches", icon: BookOpen, label: "Batches" },
@@ -22,7 +30,7 @@ const AsideBar = ({ isCollapsed, setIsCollapsed }) => {
     { path: "/trainer", icon: UserCog, label: "Trainers" },
     { path: "/invoice", icon: FileTextIcon, label: "Invoice" },
     { path: "/reports", icon: FileBarChart, label: "Reports" },
-    { path: "/login", icon: Settings, label: "LogOut" },
+    { type: "logout", icon: Settings, label: "LogOut" },
   ];
 
   return (
@@ -42,20 +50,33 @@ const AsideBar = ({ isCollapsed, setIsCollapsed }) => {
 
       <nav className="scholar-sidebar-nav mt-6">
         {menuItems.map((item) => (
-          <NavLink
-            key={item.path}
-            to={item.path}
-            className={({ isActive }) =>
-              `scholar-nav-item flex items-center p-4 hover:bg-indigo-700 ${
-                isActive ? "bg-indigo-700" : ""
-              }`
-            }
-          >
-            <item.icon size={25} />
-            {!isCollapsed && (
-              <span className="ml-4 scholar-nav-label">{item.label}</span>
-            )}
-          </NavLink>
+          item.type === "logout" ? (
+            <button
+              key="logout"
+              onClick={handleLogout}
+              className={`scholar-nav-item flex items-center p-4 hover:bg-indigo-700 w-full text-left`}
+            >
+              <item.icon size={25} />
+              {!isCollapsed && (
+                <span className="ml-4 scholar-nav-label">{item.label}</span>
+              )}
+            </button>
+          ) : (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              className={({ isActive }) =>
+                `scholar-nav-item flex items-center p-4 hover:bg-indigo-700 ${
+                  isActive ? "bg-indigo-700" : ""
+                }`
+              }
+            >
+              <item.icon size={25} />
+              {!isCollapsed && (
+                <span className="ml-4 scholar-nav-label">{item.label}</span>
+              )}
+            </NavLink>
+          )
         ))}
       </nav>
     </aside>

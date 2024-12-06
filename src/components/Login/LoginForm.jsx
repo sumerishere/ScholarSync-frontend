@@ -21,7 +21,7 @@ const LoginForm = () => {
 
   return (
     <div className="login-container flex min-h-screen bg-gray-100">
-      <div className="login-illustration w-1/2 bg-indigo-600 flex items-center justify-center p-12">
+      <div className="login-illustration w-1/2 bg-indigo-700 flex items-center justify-center p-12">
         <div className="illustration-content text-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -109,7 +109,7 @@ const LoginForm = () => {
       <div className="login-form-container w-1/2 flex items-center justify-center p-12">
         <div className="login-form-wrapper w-full max-w-md">
           <div className="mb-6 text-center">
-            <h1 className="text-4xl font-bold text-indigo-600 mb-2">
+            <h1 className="text-4xl font-bold text-indigo-800 mb-2">
               ScholarSync
             </h1>
             <p className="text-gray-600">
