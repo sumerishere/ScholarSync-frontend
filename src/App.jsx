@@ -9,6 +9,7 @@ import Nav from "./components/Nav-bar/NavBar";
 import Invoice from "./components/Invoice/Invoice";
 import LoginForm from "./components/Login/LoginForm";
 import Dashboard from "./components/Dashboard/Dashboard";
+import SignUp from "./components/SignUp/SignUp";
 
 const PrivateRoute = ({ children }) => {
   
@@ -35,7 +36,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<LoginForm />} />
-        
+        <Route path="/SignUp" element={<SignUp/>}/>
         <Route 
           path="/"
           element={
@@ -111,6 +112,7 @@ PrivateRoute.propTypes ={
 }
 
 export default App;
+
 
 
 

@@ -10,11 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@ant-design/icons": "^5.5.1",
+    "@ant-design/icons": "^5.5.2",
+    "axios": "^1.7.9",
+    "jspdf": "^2.5.2",
+    "jspdf-autotable": "^3.8.4",
+    "lodash": "^4.17.21",
     "lucide-react": "^0.464.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.0.2",
+    "react-spinners": "^0.15.0",
     "react-toastify": "^10.0.6",
     "react-toggle-dark-mode": "^1.1.1",
     "recharts": "^2.14.1"
