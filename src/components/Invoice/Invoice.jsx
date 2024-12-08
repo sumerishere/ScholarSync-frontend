@@ -588,7 +588,7 @@ const Invoice = () => {
               className="select-candidate-btn"
               onClick={() => setShowCandidateModal(true)}
             >
-              select candidate
+              Select Student
             </button>
             <button
               className="history-candidate-btn"
@@ -601,7 +601,7 @@ const Invoice = () => {
           {showCandidateModal && (
             <div className="candidate-modal">
               <div className="candidate-modal-content">
-                <h3 className="candidate-modal-header">Select a Candidate</h3>
+                <h3 className="candidate-modal-header">Select a student</h3>
                 <button
                   className="candidate-close-btn"
                   onClick={() => setShowCandidateModal(false)}
@@ -644,7 +644,7 @@ const Invoice = () => {
                       </tbody>
                     </table>
                   ) : (
-                    <div className="no-client-message">No Client Found 🙃</div>
+                    <div className="no-client-message">No Student Found 🙃</div>
                   )}
                 </div>
               </div>
@@ -664,16 +664,16 @@ const Invoice = () => {
                   Invoice Status List
                 </h2>
 
-                <div>
+                <div className=" flex justify-evenly gap-2 mt-2 ">
                   <input
-                    className="w-full px-4 py-1 mr-1 border outline-none  rounded-lg focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400"
+                    className="px-4 py-1  border outline-none  rounded-lg focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400"
                     type="text"
                     name=""
                     id="invoice-search-id"
                     value={searchMobile}
                     onChange={handleInputSearchChange}
                     maxLength={10}
-                    placeholder="Search Batch"
+                    placeholder="Search invoice by mobile"
                   />
 
                   <button className="scholar-add-student-btn w-half bg-indigo-600 hover:bg-indigo-700 text-white py-1 px-5 rounded-lg transition-colors duration-200">

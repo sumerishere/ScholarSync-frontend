@@ -2,6 +2,7 @@ import { Route, BrowserRouter as Router, Routes, Navigate } from "react-router-d
 import PropTypes from "prop-types";
 import { useState } from "react";
 import AsideBar from "./components/Aside-bar/AsideBar";
+import AllStudentsList from "./components/AllStudent-List/StudentsList";
 import Batches from "./components/Batches/Batches";
 import BatchesStudentsPage from "./components/Batches/BatchesStudentsDetails";
 import Home from "./components/Home-page/HomePage";
@@ -73,7 +74,7 @@ function App() {
           path="/students" 
           element={
             <PrivateRoute>
-              <div>Students Content</div>
+              <AllStudentsList/>
             </PrivateRoute>
           } 
         />
