@@ -1,3 +1,4 @@
+import "./Trainers.css";
 import {
   ChevronDown,
   ChevronUp,
@@ -160,7 +161,7 @@ const Trainers = () => {
 
   return (
     <>
-      <div className="trainers-root p-4 bg-gray-50 min-h-screen">
+      <div className="trainers-root ">
         <h2 className="text-2xl font-semibold mb-3">
           Total Trainers ({DUMMY_TRAINERS.length}) - All Batches
         </h2>
