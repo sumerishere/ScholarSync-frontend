@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import AsideBar from "./components/Aside-bar/AsideBar";
 import AllStudentsList from "./components/AllStudent-List/StudentsList";
+import Trainers from "./components/Trainers/Trainers";
 import Batches from "./components/Batches/Batches";
 import BatchesStudentsPage from "./components/Batches/BatchesStudentsDetails";
 import Home from "./components/Home-page/HomePage";
@@ -82,7 +83,7 @@ function App() {
           path="/trainer" 
           element={
             <PrivateRoute>
-              <div>Trainer Content</div>
+              <Trainers/>
             </PrivateRoute>
           } 
         />

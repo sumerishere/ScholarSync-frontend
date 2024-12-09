@@ -215,8 +215,10 @@ const AllStudentsList = () => {
 
   return (
     <>
-      <div className="all-student-list-root p-3 bg-gray-50 rounded">
-      <h2 className="text-2xl font-semibold mb-3">Total Students ({DUMMY_STUDENTS.length}) - All Batches</h2>  
+      <div className="all-student-list-root p-3 bg-gray-50 rounded overflow-auto">
+        <h2 className="text-2xl font-semibold mb-3">
+          Total Students ({DUMMY_STUDENTS.length}) - All Batches
+        </h2>
         <div className="bg-white shadow-md rounded-lg overflow-hidden">
           {/* Search Bar */}
           <div className="p-4 border-b flex items-center">
@@ -240,7 +242,6 @@ const AllStudentsList = () => {
 
           {/* Students Table */}
           <div className="overflow-x-auto max-h-[520px]">
-           
             <table className="w-full">
               <thead className="bg-gray-100 sticky top-0 z-10">
                 <tr>
