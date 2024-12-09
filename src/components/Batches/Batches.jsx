@@ -207,7 +207,7 @@ const Batches = () => {
         <h2 className="text-2xl font-bold text-gray-800">
           Your Batches ({batchesData.length})
         </h2>
-        <div>
+        <div className="flex">
           <input
             className="w-half px-4 py-1 mr-1 border outline-none  rounded-lg focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400"
             type="text"

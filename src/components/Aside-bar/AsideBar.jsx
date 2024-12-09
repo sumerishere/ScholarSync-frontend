@@ -1,15 +1,16 @@
-import PropTypes from "prop-types";
 import {
   BookOpen,
   ChevronLeft,
   ChevronRight,
   FileBarChart,
   FileTextIcon,
+  HomeIcon,
   LayoutDashboard,
   Settings,
   UserCog,
   Users,
 } from "lucide-react";
+import PropTypes from "prop-types";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const AsideBar = ({ isCollapsed, setIsCollapsed }) => {
@@ -18,12 +19,13 @@ const AsideBar = ({ isCollapsed, setIsCollapsed }) => {
   const handleLogout = () => {
     // Remove authentication status from localStorage
     localStorage.removeItem("isAuthenticated");
-    
+
     // Redirect to login page
     navigate("/login");
   };
-  
+
   const menuItems = [
+    { path: "/home", icon: HomeIcon, label: "Home" },
     { path: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
     { path: "/batches", icon: BookOpen, label: "Batches" },
     { path: "/students", icon: Users, label: "Students" },
@@ -49,7 +51,7 @@ const AsideBar = ({ isCollapsed, setIsCollapsed }) => {
       </div>
 
       <nav className="scholar-sidebar-nav mt-6">
-        {menuItems.map((item) => (
+        {menuItems.map((item) =>
           item.type === "logout" ? (
             <button
               key="logout"
@@ -77,8 +79,15 @@ const AsideBar = ({ isCollapsed, setIsCollapsed }) => {
               )}
             </NavLink>
           )
-        ))}
+        )}
       </nav>
+      {!isCollapsed ? (
+        <div className="mt-20 text-center text-gray-400">
+          <p>&copy; 2024 ScholarSync. All rights reserved.</p>
+        </div>
+      ) : (
+        ""
+      )}
     </aside>
   );
 };

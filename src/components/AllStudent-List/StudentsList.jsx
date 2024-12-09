@@ -215,12 +215,12 @@ const AllStudentsList = () => {
   };
 
   return (
-    <div>
-      <div className="all-student-list-root"> 
+    <div className="all-student-list-root">
+      <div className="w-full"> 
         <h2 className="text-2xl font-semibold mb-3">
           Total Students ({DUMMY_STUDENTS.length}) - All Batches
         </h2>
-        <div className="bg-white shadow-md rounded-lg overflow-auto">
+        <div className="bg-white shadow-md rounded-lg">
           {/* Search Bar */}
           <div className="p-4 border-b flex items-center">
             <div className="relative flex-grow mr-2">
@@ -242,8 +242,8 @@ const AllStudentsList = () => {
           </div>
 
           {/* Students Table */}
-          <div className="overflow-x-auto max-h-[520px]">
-            <table className="w-full">
+          <div className="overflow-x-scroll max-h-[520px]">
+            <table className="w-full ">
               <thead className="bg-gray-100 sticky top-0 z-10">
                 <tr>
                   {[
@@ -254,7 +254,7 @@ const AllStudentsList = () => {
                     "Qualification",
                     "Fees Paid",
                     "Discount",
-                    "Batch Name",
+                    "Batch Name", 
                     "Actions",
                   ].map((header) => (
                     <th

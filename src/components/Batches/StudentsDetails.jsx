@@ -160,7 +160,7 @@ const StudentsDetails = () => {
                   <tr key={student.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       <div
-                        className={`w-6 h-4 shadow rounded ${feeStatus.color}`}
+                        className={`w-6 h-3 shadow rounded ${feeStatus.color}`}
                       ></div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">

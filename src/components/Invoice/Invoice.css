@@ -2,7 +2,7 @@
   font-family: Arial, sans-serif;
   /* padding: 20px; */
   /* width:100vw; */
-  /* max-width: 900px; */
+  /* width: 900px; */
   /* margin-top: 50px; */
   /* margin-left: 30%; */
 }
@@ -485,6 +485,7 @@ font-weight: bold;
       overflow-x: auto;
   }
 }
+
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media screen and (min-width: 769px) and (max-width: 992px) {

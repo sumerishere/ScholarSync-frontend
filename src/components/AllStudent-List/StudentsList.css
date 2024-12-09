@@ -83,7 +83,11 @@ td {
 
 /* Tablets (Landscape) and Desktops */
 @media (min-width: 1025px) {
-
+  .all-student-list-root {
+    padding: 10px;
+    width: 1200px;
+  }
+  
   th,
   td {
     font-size: 1rem;
@@ -91,7 +95,9 @@ td {
     padding: 12px;
     /* Standard padding for larger screens */
   }
+  
 }
+
 
 /* Modal Styles */
 .fixed {
