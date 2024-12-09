@@ -40,7 +40,7 @@ function App() {
         <Route path="/login" element={<LoginForm />} />
         <Route path="/SignUp" element={<SignUp/>}/>
         <Route 
-          path="/home"
+          path="/"
           element={
             <PrivateRoute>
               <Home />

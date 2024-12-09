@@ -25,7 +25,7 @@ const AsideBar = ({ isCollapsed, setIsCollapsed }) => {
   };
 
   const menuItems = [
-    { path: "/home", icon: HomeIcon, label: "Home" },
+    { path: "/", icon: HomeIcon, label: "Home" },
     { path: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
     { path: "/batches", icon: BookOpen, label: "Batches" },
     { path: "/students", icon: Users, label: "Students" },
