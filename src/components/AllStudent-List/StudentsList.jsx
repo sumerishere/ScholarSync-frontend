@@ -1,3 +1,4 @@
+import "./StudentsList.css";
 import {
   ChevronDown,
   ChevronUp,
@@ -214,12 +215,12 @@ const AllStudentsList = () => {
   };
 
   return (
-    <>
-      <div className="all-student-list-root p-3 bg-gray-50 rounded overflow-auto">
+    <div>
+      <div className="all-student-list-root"> 
         <h2 className="text-2xl font-semibold mb-3">
           Total Students ({DUMMY_STUDENTS.length}) - All Batches
         </h2>
-        <div className="bg-white shadow-md rounded-lg overflow-hidden">
+        <div className="bg-white shadow-md rounded-lg overflow-auto">
           {/* Search Bar */}
           <div className="p-4 border-b flex items-center">
             <div className="relative flex-grow mr-2">
@@ -364,7 +365,7 @@ const AllStudentsList = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

@@ -391,6 +391,9 @@ font-weight: bold;
 /* Extra small devices (phones, 600px and down) */
 @media screen and (max-width: 600px) {
   .invoice-gen-root {
+    flex-wrap: wrap;
+    flex-direction: column;
+
       padding: 10px;
   }
 

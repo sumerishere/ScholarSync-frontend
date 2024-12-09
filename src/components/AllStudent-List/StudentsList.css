@@ -1,0 +1,127 @@
+/* Base Styles */
+.all-student-list-root {
+  padding: 20px;
+  min-width: 500px;
+  margin: auto;
+}
+
+h2 {
+  text-align: left;
+}
+
+/* Search Bar Styles */
+input[type="text"] {
+  width: 100%;
+}
+
+/* Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 12px;
+  text-align: left;
+}
+
+/* Responsive Styles */
+
+/* Mobile Devices */
+@media (max-width: 767px) {
+  .all-student-list-root {
+    padding: 10px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    /* Adjust font size for smaller screens */
+  }
+
+  table {
+    display: block;
+    /* Make table scrollable on small screens */
+    overflow-x: auto;
+    white-space: nowrap;
+    /* Prevent text wrapping */
+  }
+
+  th,
+  td {
+    font-size: 0.9rem;
+    /* Smaller font size for mobile */
+    padding: 8px;
+    /* Reduce padding for mobile */
+  }
+
+  .bg-white {
+    box-shadow: none;
+    /* Remove shadow for mobile view */
+  }
+}
+
+/* Tablets (Portrait) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .all-student-list-root {
+    padding: 15px;
+    width: 500px;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+    /* Adjust font size for tablets */
+  }
+
+  th,
+  td {
+    font-size: 1rem;
+    /* Adjust font size for tablets */
+    padding: 10px;
+    /* Adjust padding for tablets */
+  }
+}
+
+/* Tablets (Landscape) and Desktops */
+@media (min-width: 1025px) {
+
+  th,
+  td {
+    font-size: 1rem;
+    /* Standard font size for larger screens */
+    padding: 12px;
+    /* Standard padding for larger screens */
+  }
+}
+
+/* Modal Styles */
+.fixed {
+  position: fixed;
+}
+
+.bg-black {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.p-6 {
+  padding: 24px;
+}
+
+.rounded-lg {
+  border-radius: 8px;
+}
+
+/* Button Styles */
+button {
+  cursor: pointer;
+}
+
+/* Hover Effects */
+button:hover {
+  opacity: 0.9;
+  /* Slightly reduce opacity on hover for buttons */
+}
