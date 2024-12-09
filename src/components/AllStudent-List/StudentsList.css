@@ -1,7 +1,6 @@
 /* Base Styles */
 .all-student-list-root {
   padding: 20px;
-  min-width: 500px;
   margin: auto;
 }
 
@@ -65,7 +64,7 @@ td {
 @media (min-width: 768px) and (max-width: 1024px) {
   .all-student-list-root {
     padding: 15px;
-    width: 500px;
+    width: 600px;
   }
 
   h2 {
