@@ -21,7 +21,7 @@ const Home = () => {
           <div className="lg:flex lg:items-center ml-8 lg:justify-between">
             <div className="lg:w-1/2">
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-                Welcome! to ScholarSync By Testing Shastra.
+                Welcome!👋🏻 to ScholarSync By Testing Shastra.
               </h2>
               <p className="text-lg text-indigo-100 mb-6">
                 {`Streamline your educational institution's management with our

@@ -1,4 +1,5 @@
 import { debounce } from "lodash";
+import {AlarmClock, HistoryIcon} from "lucide-react";
 import { useCallback, useState } from "react";
 import "./StudentsDetails.css";
 
@@ -190,10 +191,10 @@ const StudentsDetails = () => {
                     <td className="px-6 sticky right-0 bg-white py-4 whitespace-nowrap text-sm">
                       <div className="flex space-x-2">
                         <button className="px-3 py-1 bg-blue-600 border border-grey-700 text-white text-sm rounded hover:border-black bg-blue-500  transition-colors">
-                          History
+                          <HistoryIcon/>
                         </button>
                         <button className="px-3 py-1 border border-grey-700 bg-yellow-600 text-white text-sm rounded hover:border-black bg-yellow-500 transition-colors">
-                          Reminder
+                        <AlarmClock/>
                         </button>
                         <button className="px-6 py-1 border border-grey-700 bg-green-600 text-white text-sm rounded hover:border-black bg-green-500 transition-colors">
                           Pay

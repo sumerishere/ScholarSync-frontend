@@ -13,7 +13,7 @@ const Nav = () => {
             {/* Profile Info */}
             <div className="scholar-profile-info text-right">
               <p className="scholar-profile-name font-semibold text-gray-800">Testing Shastra</p>
-              <p className="scholar-profile-role text-sm text-gray-600">Admin</p>              
+              <p className="scholar-profile-role text-sm text-gray-600">Admin : Avinash</p>              
             </div>
             
             {/* Profile Avatar */}
