@@ -91,7 +91,7 @@ const StudentsDetails = () => {
               <tr>
                 <th
                   scope="col"
-                  className="sticky top-0 bg-gray-50 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b shadow-sm"
+                  className="sticky top-0 sticky  left-0 bg-gray-50 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b shadow-sm"
                 >
                   Fee Status
                 </th>
@@ -159,7 +159,7 @@ const StudentsDetails = () => {
                 );
                 return (
                   <tr key={student.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="sticky left-0 bg-white px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       <div
                         className={`w-6 h-3 shadow rounded ${feeStatus.color}`}
                       ></div>

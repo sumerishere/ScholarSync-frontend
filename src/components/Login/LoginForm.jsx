@@ -97,7 +97,7 @@ const LoginForm = () => {
               strokeWidth="4"
             />
           </svg>
-          <h2 className="text-3xl font-bold text-white">ScholarSync</h2>
+          <h2 className="text-3xl text-center font-bold text-white">ScholarSync</h2>
           <p className="text-white mt-4">
             {`
             Emphasizes the synchronization of student and trainer data,
