@@ -11,8 +11,10 @@ import {
   UserCircle,
   Users,
 } from "lucide-react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./SignUp.css";
 
 const SignUp = () => {
@@ -25,6 +27,9 @@ const SignUp = () => {
     password: "",
     confirmPassword: "",
   });
+
+  const navigate = useNavigate();
+
 
   const [showPassword, setShowPassword] = useState({
     password: false,
@@ -39,7 +44,7 @@ const SignUp = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Basic validation before submission
     const isValid = Object.values(formData).every(
@@ -48,9 +53,48 @@ const SignUp = () => {
 
     if (isValid && formData.password === formData.confirmPassword) {
       console.log("Form submitted:", formData);
-      alert("Form submitted successfully!");
+      // alert("Form submitted successfully!");
     } else {
       alert("Please fill all fields and ensure passwords match");
+    }
+    
+    try {
+      const response = await fetch("http://localhost:8080/api/admin/create-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const responseText = await response.text(); // Read response as text
+
+      // Handle success response
+      if (response.ok) {
+        toast.success("Form submitted successfully!");
+      
+        // Reset form data and errors
+        setFormData({
+          name: "",
+          mobile: "",
+          address: "",
+          email: "",
+          instituteName: "",
+          password: "",
+          confirmPassword: "",
+        });
+
+        // Navigate to login page after 3 seconds
+        setTimeout(() => {
+          navigate('/login');
+        }, 3000);
+
+      } else {
+        toast.error(`Error: ${responseText}`);
+      }
+    }catch (error) {
+        toast.error(`Error submitting the form: ${error.message}`);
+        console.error("Submission error:", error);
     }
   };
 
@@ -297,6 +341,7 @@ const SignUp = () => {
           </form>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
