@@ -1,22 +1,30 @@
+import confetti from "canvas-confetti";
 import { Plus, UserPlus, Users, X } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Batches = () => {
-  
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isStudentModalOpen, setIsStudentModalOpen] = useState(false);
   const [cardDetails, setCardDetails] = useState(false);
-
-  const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     batchName: "",
     subject: "",
-    trainerName: "",
+    trainerId: "",
     startDate: "",
   });
+
+  const navigate = useNavigate();
+
+  // const [formData, setFormData] = useState({
+  //   batchName: "",
+  //   subject: "",
+  //   trainerName: "",
+  //   startDate: "",
+  // });
 
   const [studentFormData, setStudentFormData] = useState({
     studentName: "",
@@ -95,41 +103,41 @@ const Batches = () => {
   //   fetchBatches();
   // }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     [name]: value,
+  //   }));
+  // };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      // Replace with your API endpoint
-      const response = await fetch("your-api-endpoint/batches", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.batchName,
-          startDate: formData.startDate,
-        }),
-      });
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     // Replace with your API endpoint
+  //     const response = await fetch("your-api-endpoint/batches", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         name: formData.batchName,
+  //         startDate: formData.startDate,
+  //       }),
+  //     });
 
-      if (response.ok) {
-        // const newBatch = await response.json();
-        // setBatchesData((prev) => [...prev, newBatch]);
-        setIsModalOpen(false);
-        setFormData({ batchName: "", startDate: "" });
-      } else {
-        console.error("Failed to add batch");
-      }
-    } catch (error) {
-      console.error("Error adding batch:", error);
-    }
-  };
+  //     if (response.ok) {
+  //       // const newBatch = await response.json();
+  //       // setBatchesData((prev) => [...prev, newBatch]);
+  //       setIsModalOpen(false);
+  //       setFormData({ batchName: "", startDate: "" });
+  //     } else {
+  //       console.error("Failed to add batch");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error adding batch:", error);
+  //   }
+  // };
 
   const handleStudentInputChange = (e) => {
     const { name, value } = e.target;
@@ -196,9 +204,133 @@ const Batches = () => {
     }));
   };
 
-  if(cardDetails){
+  if (cardDetails) {
     navigate("/batches/details");
   }
+
+  // Sample trainers data - replace with your actual data
+  const trainers = [
+    { id: 1, name: "John Doe" },
+    { id: 2, name: "Vinod Kumar" },
+    { id: 3, name: "Avinash Pingale" },
+    { id: 4, name: "Daya Sir" },
+  ];
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const triggerConfetti = () => {
+    const defaults = {
+      spread: 360,
+      ticks: 150, // Increased ticks for longer-lasting particles
+      gravity: 0.5, // Reduced gravity for slower falling
+      decay: 0.97, // Increased decay for longer-lasting particles
+      startVelocity: 25, // Reduced velocity for slower movement
+      colors: [
+        "#ff0000",
+        "#00ff00",
+        "#0000ff",
+        "#ffff00",
+        "#ff00ff",
+        "#00ffff",
+      ],
+    };
+
+    function shoot() {
+      confetti({
+        ...defaults,
+        particleCount: 25, // Reduced particle count per burst
+        scalar: 1.2,
+        shapes: ["star"],
+      });
+
+      confetti({
+        ...defaults,
+        particleCount: 20, // Reduced particle count per burst
+        scalar: 0.75,
+        shapes: ["circle"],
+      });
+    }
+
+    // Sequential bursts with longer delays
+    setTimeout(shoot, 0);
+    setTimeout(shoot, 700); // Increased delay between bursts
+    setTimeout(shoot, 500); // Increased delay between bursts
+    setTimeout(shoot, 750); // Added extra burst
+    setTimeout(shoot, 1000); // Added final burst
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    // Create the payload according to your API requirements
+    const payload = {
+      batchName: formData.batchName,
+      courseName: formData.subject,
+      startDate: formData.startDate,
+      trianerId: [parseInt(formData.trainerId)],
+    };
+
+    try {
+      const loadingToast = toast.loading("Adding new batch...", {
+        position: "top-right",
+      });
+
+      // Replace this URL with your actual API endpoint
+      const response = await fetch(
+        "http://localhost:8080/api/batch/create-batch",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            // Add any other headers you need (e.g., authorization)
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to add batch");
+      }
+
+      // const data = await response.json();
+
+      // Update the loading toast to success
+      toast.update(loadingToast, {
+        render: "Batch added successfully! 🎉",
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+        closeButton: true,
+      });
+
+      // Trigger confetti animation
+      triggerConfetti();
+
+      // Reset form and close modal
+      setFormData({
+        batchName: "",
+        subject: "",
+        trainerId: "",
+        startDate: "",
+      });
+      setIsModalOpen(false);
+    } catch (error) {
+      toast.error("Failed to add batch. Please try again.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      console.error("Error adding batch:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="scholar-batches p-6">
@@ -236,7 +368,12 @@ const Batches = () => {
             className="scholar-batch-card bg-white rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300"
           >
             {/* Card Header */}
-            <div onClick={()=>{setCardDetails(true)}} className="p-6 border-b cursor-pointer  border-gray-200">
+            <div
+              onClick={() => {
+                setCardDetails(true);
+              }}
+              className="p-6 border-b cursor-pointer  border-gray-200"
+            >
               <h3 className="text-lg font-semibold text-gray-800 mb-2">
                 {batch.name}
               </h3>
@@ -277,6 +414,19 @@ const Batches = () => {
         ))}
       </div>
 
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+
       {/* Modal Overlay */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -294,6 +444,7 @@ const Batches = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Rest of the form fields remain the same */}
               <div>
                 <label
                   htmlFor="batchName"
@@ -315,7 +466,7 @@ const Batches = () => {
 
               <div>
                 <label
-                  htmlFor="startDate"
+                  htmlFor="subject"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
                   Subject
@@ -334,21 +485,26 @@ const Batches = () => {
 
               <div>
                 <label
-                  htmlFor="startDate"
+                  htmlFor="trainerId"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
                   Trainer Name
                 </label>
-                <input
-                  type="text"
-                  id="trainerName"
-                  placeholder="Enter Trainer Name"
-                  name="trainerName"
-                  value={formData.trainerName}
+                <select
+                  id="trainerId"
+                  name="trainerId"
+                  value={formData.trainerId}
                   onChange={handleInputChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   required
-                />
+                >
+                  <option value="">Select a trainer</option>
+                  {trainers.map((trainer) => (
+                    <option key={trainer.id} value={trainer.id}>
+                      {trainer.name}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div>
@@ -374,14 +530,16 @@ const Batches = () => {
                   type="button"
                   onClick={() => setIsModalOpen(false)}
                   className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors duration-200"
+                  disabled={isLoading}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors duration-200"
+                  className="flex-1 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors duration-200 disabled:opacity-50"
+                  disabled={isLoading}
                 >
-                  Add Batch 😊
+                  {isLoading ? "Adding..." : "Add Batch 😊"}
                 </button>
               </div>
             </form>

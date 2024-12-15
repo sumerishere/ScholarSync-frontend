@@ -12,6 +12,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.5.2",
     "axios": "^1.7.9",
+    "canvas-confetti": "^1.9.3",
     "jspdf": "^2.5.2",
     "jspdf-autotable": "^3.8.4",
     "lodash": "^4.17.21",
