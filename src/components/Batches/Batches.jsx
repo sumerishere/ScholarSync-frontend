@@ -268,6 +268,7 @@ const Batches = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    let loadingToast;
 
     // Create the payload according to your API requirements
     const payload = {
@@ -300,9 +301,10 @@ const Batches = () => {
       }
 
       // const data = await response.json();
+      toast.dismiss(loadingToast);
 
       // Update the loading toast to success
-      toast.update(loadingToast, {
+      toast.update(loadingToast,{
         render: "Batch added successfully! 🎉",
         type: "success",
         isLoading: false,
@@ -312,7 +314,6 @@ const Batches = () => {
 
       // Trigger confetti animation
       triggerConfetti();
-
       // Reset form and close modal
       setFormData({
         batchName: "",
@@ -322,6 +323,7 @@ const Batches = () => {
       });
       setIsModalOpen(false);
     } catch (error) {
+      toast.dismiss(loadingToast);
       toast.error("Failed to add batch. Please try again.", {
         position: "top-right",
         autoClose: 3000,
