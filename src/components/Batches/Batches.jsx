@@ -1,5 +1,15 @@
 import confetti from "canvas-confetti";
-import { Plus, UserPlus, Users, X } from "lucide-react";
+import {
+  BookOpenText,
+  ChevronRight,
+  FolderClosed,
+  Plus,
+  UserPlus,
+  Users,
+  Video,
+  X,
+} from "lucide-react";
+// import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -289,6 +299,51 @@ const Batches = () => {
   return (
     <div className="batch-root scholar-batches p-6">
       {/* Header with Add Batch button */}
+
+      <div className="grid mb-10 grid-cols-1  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 p-5">
+        <div className="h-[100px] bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 cursor-pointer border border-gray-300">
+          <div className="flex items-center mt-3 ml-10 gap-3 ">
+            <p className="mt-6 text-xl font-semibold text-center">
+              <FolderClosed />{" "}
+            </p>
+            <p className="mt-6 text-xl font-semibold text-center">
+              Class Content
+            </p>
+            <p className="mt-6 text-xl font-semibold text-center">
+              <ChevronRight />{" "}
+            </p>
+          </div>
+        </div>
+
+        <div className="h-[100px] bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 cursor-pointer border border-gray-300">
+          <div className="flex items-center mt-3 ml-10 gap-3">
+            <p className="mt-6 text-xl font-semibold text-center">
+              <Video />{" "}
+            </p>
+            <p className="mt-6 text-xl font-semibold text-center">
+              Live Classes
+            </p>
+            <p className="mt-6 text-xl font-semibold text-center">
+              <ChevronRight />{" "}
+            </p>
+          </div>
+        </div>
+
+        <div className="h-[100px] bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 cursor-pointer border border-gray-300">
+          <div className="flex items-center mt-3 ml-10 gap-3">
+            <p className="mt-6 text-xl font-semibold text-center">
+              <BookOpenText />{" "}
+            </p>
+            <p className="mt-6 text-xl font-semibold text-center">
+              Assignment Material
+            </p>
+            <p className="mt-6 text-xl font-semibold text-center">
+              <ChevronRight />{" "}
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div className="mb-6 flex justify-between items-center">
         <h2 className="text-2xl font-bold text-gray-800">
           Your Batches ({batchesData.length})
@@ -319,7 +374,6 @@ const Batches = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-
         {batchesData.length === 0 && (
           <div className=" mt-[50px] border text-center py-4 px-2  text-gray-500">
             <p className="text-center text-2xl ">No Batch found 😴</p>
