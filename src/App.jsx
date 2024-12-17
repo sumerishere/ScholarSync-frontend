@@ -59,7 +59,7 @@ function App() {
           path="/batches" 
           element={
             <PrivateRoute>
-              <Batches />
+              <Batches/>
             </PrivateRoute>
           } 
         />

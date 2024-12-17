@@ -78,3 +78,15 @@
   background-color: #4f46e5;
   border-radius: 4px;
 }
+
+/* @media (max-width: 767px) {
+  .batch-root{
+    padding: 10px;
+  }
+
+  #add-batch-id{
+    width: 100px;
+    font-size: 10px;
+  }
+
+} */

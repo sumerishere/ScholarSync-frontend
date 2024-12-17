@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState} from "react";
+
+// import {useLocation} from "react-router-dom";
 
 const BatchDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -11,31 +13,41 @@ const BatchDetails = () => {
     startDate: "2024-12-05",
   });
 
-  // Temporary student data
-  // const [students] = useState([
-  //   {
-  //     id: 1,
-  //     studentName: "Alice Johnson",
-  //     mobileNumber: "9876543210",
-  //     address: "123 Tech Street, Coding City",
-  //     email: "alice@example.com",
-  //     qualification: "B.Tech",
-  //     feesPaid: 25000,
-  //     totalFees: 45000,
-  //     discount: 5000,
-  //   },
-  //   {
-  //     id: 2,
-  //     studentName: "Bob Smith",
-  //     mobileNumber: "9876543211",
-  //     address: "456 Dev Avenue, Program Town",
-  //     email: "bob@example.com",
-  //     qualification: "MCA",
-  //     feesPaid: 30000,
-  //     totalFees: 45000,
-  //     discount: 3000,
-  //   },
-  // ]);
+  // const [batchData, setBatchData] = useState(null); // State to hold fetched batch data
+  // const [error, setError] = useState(null);
+
+  // const location = useLocation();
+  // const {batchId} = location.state || {};
+
+  // console.log("batch : ", batchId);
+
+  // const fetchBatchById = async (batchId) => {
+  //   try {
+  //     const encodedBatchId = encodeURIComponent(batchId);
+  //     const response = await fetch(
+  //       `http://localhost:8080/api/batch/get-batch/${encodedBatchId}`
+  //     );
+
+  //     if (!response.ok) {
+  //       throw new Error(
+  //         `Error fetching batch with ID ${batchId}: ${response.status}`
+  //       );
+  //     }
+
+  //     const data = await response.json();
+  //     console.log("Batch data:", data);
+
+  //     setBatchData(data); // Update state with fetched data
+  //     // setError(null); // Clear any previous error
+  //   } catch (err) {
+  //     console.error("Error fetching batch:", err);
+  //     // setError(err.message); // Update state with error message
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchBatchById();
+  // }, [batchId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -87,7 +99,7 @@ const BatchDetails = () => {
                     <input
                       type="text"
                       name="batchName"
-                      value={formData.batchName}
+                      value={formData.batchName || "NA"}
                       onChange={handleChange}
                       className="form-input w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                     />
@@ -101,7 +113,7 @@ const BatchDetails = () => {
                       readOnly
                       type="text"
                       name="batchCode"
-                      value={formData.batchCode}
+                      value={formData.batchCode || "NA"}
                       onChange={handleChange}
                       className="form-input w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                     />
@@ -115,7 +127,7 @@ const BatchDetails = () => {
                       type="number"
                       readOnly
                       name="studentCount"
-                      value={formData.studentCount}
+                      value={"25"}
                       onChange={handleChange}
                       className="form-input w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                     />
@@ -130,7 +142,7 @@ const BatchDetails = () => {
                     <input
                       type="text"
                       name="subject"
-                      value={formData.subject}
+                      value={formData.subject || "NA"}
                       onChange={handleChange}
                       className="form-input w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                     />
@@ -143,7 +155,7 @@ const BatchDetails = () => {
                     <input
                       type="text"
                       name="trainer"
-                      value={formData.trainer}
+                      value={"NA"}
                       onChange={handleChange}
                       className="form-input w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                     />
@@ -192,7 +204,7 @@ const BatchDetails = () => {
               Batch Name
             </span>
             <span className="block mt-1 font-semibold text-gray-900">
-              {formData.batchName}
+              {formData.batchName || "NA"}
             </span>
           </div>
 
@@ -201,7 +213,7 @@ const BatchDetails = () => {
               Batch Code
             </span>
             <span className="block mt-1 font-semibold text-gray-900">
-              {formData.batchCode}
+              {formData.batchCode || "NA"}
             </span>
           </div>
 
@@ -210,7 +222,7 @@ const BatchDetails = () => {
               Student Count
             </span>
             <span className="block mt-1 font-semibold text-gray-900">
-              {formData.studentCount}
+              {formData.studentCount || "NA"}
             </span>
           </div>
         </div>
@@ -221,7 +233,7 @@ const BatchDetails = () => {
               Subject
             </span>
             <span className="block mt-1 font-semibold text-gray-900">
-              {formData.subject}
+              {formData.subject || "NA"}
             </span>
           </div>
 
@@ -230,7 +242,7 @@ const BatchDetails = () => {
               Trainer Assigned
             </span>
             <span className="block mt-1 font-semibold text-gray-900">
-              {formData.trainer}
+              {formData.trainer || "NA"}
             </span>
           </div>
 
@@ -239,15 +251,14 @@ const BatchDetails = () => {
               Start Date
             </span>
             <span className="block mt-1 font-semibold text-gray-900">
-              {formData.startDate}
+              {formData.startDate || "NA"}
             </span>
           </div>
         </div>
       </div>
-
-      
     </div>
   );
 };
+
 
 export default BatchDetails;

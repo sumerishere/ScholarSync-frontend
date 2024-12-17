@@ -1,11 +1,32 @@
 import confetti from "canvas-confetti";
 import { Plus, UserPlus, Users, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+const useDebounce = (value, delay) => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+};
+
 const Batches = () => {
+  const [searchBatch, setSearchBatch] = useState("");
+  const debouncedSearchTerm = useDebounce(searchBatch, 500);
+
+  // const [batchId, setBatchId] = useState("");
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isStudentModalOpen, setIsStudentModalOpen] = useState(false);
@@ -19,12 +40,9 @@ const Batches = () => {
 
   const navigate = useNavigate();
 
-  // const [formData, setFormData] = useState({
-  //   batchName: "",
-  //   subject: "",
-  //   trainerName: "",
-  //   startDate: "",
-  // });
+  // const handleViewDetails = (batchId) => {
+  //   navigate(`/batches/details`, { state: { batchId } });
+  // };
 
   const [studentFormData, setStudentFormData] = useState({
     studentName: "",
@@ -35,109 +53,43 @@ const Batches = () => {
     feesPaid: "",
   });
 
-  // Temporary batch data
-  const batchesData = [
-    {
-      id: 1,
-      name: "Larkspur23A",
-      subject: "Full Stack Development",
-      totalStudents: 25,
-      startDate: "2024-01-15",
-      batchCode: "#3030",
-    },
-    {
-      id: 2,
-      name: "Aster24",
-      subject: "Data Science",
-      totalStudents: 18,
-      startDate: "2024-02-01",
-      batchCode: "#3030",
-    },
-    {
-      id: 3,
-      name: "Piony24",
-      subject: "UI/UX Design",
-      totalStudents: 20,
-      startDate: "2024-02-15",
-      batchCode: "#3030",
-    },
-    {
-      id: 4,
-      name: "Carnation23",
-      subject: "DevOps Engineering",
-      totalStudents: 15,
-      startDate: "2024-03-01",
-      batchCode: "#3030",
-    },
-    {
-      id: 5,
-      name: "Daisy24R",
-      subject: "Mobile Development",
-      totalStudents: 22,
-      startDate: "2024-03-15",
-      batchCode: "#3030",
-    },
-    {
-      id: 6,
-      name: "Aster24F",
-      subject: "Automation Testing",
-      totalStudents: 32,
-      startDate: "2024-03-15",
-      batchCode: "#3030",
-    },
-  ];
+  const [batchesData, setBatchesData] = useState([]);
 
-  // const [batchesData, setBatchesData] = useState([]);
+  const fetchBatches = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/batch/get-all-batch`
+      );
+      const data = await response.json();
+      console.log("data :", data);
+      setBatchesData(data);
+    } catch (error) {
+      console.error("Error fetching batches:", error);
+    }
+  };
 
-  // useEffect(() => {
-  //   const fetchBatches = async () => {
-  //     try {
-  //       const response = await fetch("your-api-endpoint");
-  //       const data = await response.json();
-  //       setBatchesData(data);
-  //     } catch (error) {
-  //       console.error("Error fetching batches:", error);
-  //     }
-  //   };
+  const searchBatches = async (searchTerm) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(
+        `http://localhost:8080/api/batch/search-batch?batchName=${searchTerm}`
+      );
+      const data = await response.json();
+      setBatchesData(data);
+    } catch (error) {
+      console.error("Error searching batches:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  //   fetchBatches();
-  // }, []);
-
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData((prev) => ({
-  //     ...prev,
-  //     [name]: value,
-  //   }));
-  // };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     // Replace with your API endpoint
-  //     const response = await fetch("your-api-endpoint/batches", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         name: formData.batchName,
-  //         startDate: formData.startDate,
-  //       }),
-  //     });
-
-  //     if (response.ok) {
-  //       // const newBatch = await response.json();
-  //       // setBatchesData((prev) => [...prev, newBatch]);
-  //       setIsModalOpen(false);
-  //       setFormData({ batchName: "", startDate: "" });
-  //     } else {
-  //       console.error("Failed to add batch");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error adding batch:", error);
-  //   }
-  // };
+  useEffect(() => {
+    if (debouncedSearchTerm.length > 3) {
+      searchBatches(debouncedSearchTerm);
+    } else if (debouncedSearchTerm.length === 0) {
+      fetchBatches();
+    }
+  }, [debouncedSearchTerm]);
 
   const handleStudentInputChange = (e) => {
     const { name, value } = e.target;
@@ -304,7 +256,7 @@ const Batches = () => {
       toast.dismiss(loadingToast);
 
       // Update the loading toast to success
-      toast.update(loadingToast,{
+      toast.update(loadingToast, {
         render: "Batch added successfully! 🎉",
         type: "success",
         isLoading: false,
@@ -335,7 +287,7 @@ const Batches = () => {
   };
 
   return (
-    <div className="scholar-batches p-6">
+    <div className="batch-root scholar-batches p-6">
       {/* Header with Add Batch button */}
       <div className="mb-6 flex justify-between items-center">
         <h2 className="text-2xl font-bold text-gray-800">
@@ -347,6 +299,8 @@ const Batches = () => {
             type="text"
             name=""
             id=""
+            value={searchBatch}
+            onChange={(e) => setSearchBatch(e.target.value)}
             placeholder="Search Batch"
           />
 
@@ -355,8 +309,9 @@ const Batches = () => {
           </button>
         </div>
         <button
+          id="add-batch-id"
           onClick={() => setIsModalOpen(true)}
-          className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors duration-200"
+          className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1 rounded-lg transition-colors duration-200"
         >
           <Plus size={20} />
           Add Batch
@@ -364,26 +319,34 @@ const Batches = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+        {batchesData.length === 0 && (
+          <div className=" mt-[50px] border text-center py-4 px-2  text-gray-500">
+            <p className="text-center text-2xl ">No Batch found 😴</p>
+          </div>
+        )}
+
         {batchesData.map((batch) => (
           <div
-            key={batch.id}
+            key={batch.batchId}
             className="scholar-batch-card bg-white rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300"
           >
             {/* Card Header */}
             <div
               onClick={() => {
                 setCardDetails(true);
+                // handleViewDetails(batch.batchId);
               }}
               className="p-6 border-b cursor-pointer  border-gray-200"
             >
               <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                {batch.name}
+                {batch.batchName}
               </h3>
               <h4 className="text-md font-semibold text-indigo-600 text-gray-800 mb-2">
-                Subject : {batch.subject}
+                Subject : {batch.courseName}
               </h4>
               <p className="text-sm font-semibold text-black-600">
-                Batch Code: {batch.batchCode}
+                Batch Code: {batch.batchId}
               </p>
               <p className="text-sm text-gray-500">
                 Started: {new Date(batch.startDate).toLocaleDateString()}
