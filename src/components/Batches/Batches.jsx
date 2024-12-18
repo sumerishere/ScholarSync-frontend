@@ -40,7 +40,7 @@ const Batches = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isStudentModalOpen, setIsStudentModalOpen] = useState(false);
-  const [cardDetails, setCardDetails] = useState(false);
+  // const [cardDetails, setCardDetails] = useState(false);
   const [formData, setFormData] = useState({
     batchName: "",
     subject: "",
@@ -166,9 +166,9 @@ const Batches = () => {
     }));
   };
 
-  if (cardDetails) {
-    navigate("/batches/details");
-  }
+  // if (cardDetails) {
+  //   navigate("/batches/details");
+  // }
 
   // Sample trainers data - replace with your actual data
   const trainers = [
@@ -383,13 +383,14 @@ const Batches = () => {
         {batchesData.map((batch) => (
           <div
             key={batch.batchId}
-            className="scholar-batch-card bg-white rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300"
+            className="scholar-batch-card border border-gray-300 bg-white rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300"
           >
             {/* Card Header */}
             <div
               onClick={() => {
-                setCardDetails(true);
-                // handleViewDetails(batch.batchId);
+                // setCardDetails(true);
+                navigate(`/batches/details/${encodeURIComponent(batch.batchId)}`); // Navigate
+
               }}
               className="p-6 border-b cursor-pointer  border-gray-200"
             >

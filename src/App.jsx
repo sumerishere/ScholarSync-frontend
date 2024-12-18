@@ -64,7 +64,7 @@ function App() {
           } 
         />
         <Route 
-          path="/batches/details" 
+          path="/batches/details/:batchId" 
           element={
             <PrivateRoute>
               <BatchesStudentsPage />
