@@ -34,8 +34,8 @@ const useDebounce = (value, delay) => {
 const Batches = () => {
   const [searchBatch, setSearchBatch] = useState("");
   const debouncedSearchTerm = useDebounce(searchBatch, 500);
-
-  // const [batchId, setBatchId] = useState("");
+  // const [StudentAdded, onStudentAdded] = useState(null);
+  const [getBatchId, setBatchId] = useState("");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -50,17 +50,14 @@ const Batches = () => {
 
   const navigate = useNavigate();
 
-  // const handleViewDetails = (batchId) => {
-  //   navigate(`/batches/details`, { state: { batchId } });
-  // };
-
   const [studentFormData, setStudentFormData] = useState({
-    studentName: "",
-    mobileNumber: "",
-    address: "",
-    email: "",
-    qualification: "",
-    feesPaid: "",
+    firstName: "",
+    lastName: "",
+    studentAddress: "",
+    studentEmail: "",
+    studentMobileNumber: "",
+    stream: "",
+    batchId: getBatchId,
   });
 
   const [batchesData, setBatchesData] = useState([]);
@@ -109,66 +106,13 @@ const Batches = () => {
     }));
   };
 
-  const handleStudentSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch("your-api-endpoint/students", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(studentFormData),
-      });
-
-      if (response.ok) {
-        setIsStudentModalOpen(false);
-        setStudentFormData({
-          studentName: "",
-          mobileNumber: "",
-          address: "",
-          email: "",
-          qualification: "",
-          feesPaid: "",
-        });
-      } else {
-        console.error("Failed to add student");
-      }
-    } catch (error) {
-      console.error("Error adding student:", error);
-    }
-  };
-
-  //----------- mobile validation ---------------------//
-
-  const handleMobileChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-    const numericValue = value.replace(/\D/g, "").slice(0, 10);
-
-    setStudentFormData((prevState) => ({
-      ...prevState,
-      [name]: numericValue,
-    }));
+    setFormData({
+      ...formData,
+      [name]: value, // Update the specific field in the formData object
+    });
   };
-
-  //------------- fees validation --------------//
-  const handleFeesChange = (e) => {
-    const { name, value } = e.target;
-
-    // Only accept and store numbers, completely ignore any other character
-    const numericValue = value
-      .split("")
-      .filter((char) => /[0-9]/.test(char))
-      .join("");
-
-    setStudentFormData((prevState) => ({
-      ...prevState,
-      [name]: numericValue,
-    }));
-  };
-
-  // if (cardDetails) {
-  //   navigate("/batches/details");
-  // }
 
   // Sample trainers data - replace with your actual data
   const trainers = [
@@ -178,12 +122,115 @@ const Batches = () => {
     { id: 4, name: "Daya Sir" },
   ];
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prevState) => ({
+  //     ...prevState,
+  //     [name]: value,
+  //   }));
+  // };
+
+  //-------------- handling student form submissison --------------------//
+
+  const validateForm = () => {
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(studentFormData.studentEmail)) {
+      toast.error("Please enter a valid email address");
+      return false;
+    }
+
+    // Phone number validation matching backend pattern
+    // Allows formats like: +1 (123) 456-7890, 123-456-7890, 123.456.7890, 1234567890
+    const phoneRegex = /^\+?1?\s*\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
+
+    if (!studentFormData.studentMobileNumber) {
+      toast.error("Mobile number is required");
+      return false;
+    }
+
+    if (!phoneRegex.test(studentFormData.studentMobileNumber)) {
+      toast.error(
+        "Invalid mobile number format. Please use format: 123-456-7890"
+      );
+      return false;
+    }
+
+    // Required fields validation with trimming
+    const requiredFields = {
+      firstName: "First Name",
+      lastName: "Last Name",
+      studentAddress: "Address",
+      stream: "Stream",
+    };
+
+    for (const [field, label] of Object.entries(requiredFields)) {
+      if (!studentFormData[field]?.trim()) {
+        toast.error(`${label} is required`);
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  const handleStudentSubmit = async (event) => {
+    // Prevent default form submission behavior
+    event.preventDefault();
+
+    // Validate form data before submission
+    if (!validateForm()) {
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/students/add-student",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...studentFormData,
+            batchId: getBatchId, // Include batchId in the payload
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(
+          errorData.message || `HTTP error! status: ${response.status}`
+        );
+      }
+
+      // const data = await response.json();
+
+      // Show success message
+      toast.success("Student Added Successfully!");
+
+      // Reset form data
+      setStudentFormData({
+        firstName: "",
+        lastName: "",
+        studentAddress: "",
+        studentEmail: "",
+        studentMobileNumber: "",
+        stream: "",
+        batchId: getBatchId,
+      });
+
+      // Close modal
+      setIsStudentModalOpen(false);
+
+      // if (onStudentAdded) {
+      //   onStudentAdded(data);
+      // }
+    } catch (error) {
+      toast.error(error.message || "Error submitting form!");
+      console.error("Error:", error);
+    }
   };
 
   const triggerConfetti = () => {
@@ -296,6 +343,11 @@ const Batches = () => {
     }
   };
 
+  const handleStudentModel = (batch) => {
+    setBatchId(batch.batchId);
+    setIsStudentModalOpen(true);
+  };
+
   return (
     <div className="batch-root scholar-batches p-6">
       {/* Header with Add Batch button */}
@@ -389,8 +441,10 @@ const Batches = () => {
             <div
               onClick={() => {
                 // setCardDetails(true);
-                navigate(`/batches/details/${encodeURIComponent(batch.batchId)}`); // Navigate
 
+                navigate(
+                  `/batches/details/${encodeURIComponent(batch.batchId)}`
+                ); // Navigate
               }}
               className="p-6 border-b cursor-pointer  border-gray-200"
             >
@@ -413,7 +467,7 @@ const Batches = () => {
               {/* Add Student Button */}
               <button
                 className="scholar-add-student-btn w-half flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg transition-colors duration-200"
-                onClick={() => setIsStudentModalOpen(true)}
+                onClick={() => handleStudentModel(batch)}
               >
                 <UserPlus size={20} />
                 <span>Add Student</span>
@@ -586,17 +640,17 @@ const Batches = () => {
             <form onSubmit={handleStudentSubmit} className="space-y-4">
               <div>
                 <label
-                  htmlFor="studentName"
+                  htmlFor="firstName"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Student Name
+                  First Name
                 </label>
                 <input
                   type="text"
-                  id="studentName"
-                  name="studentName"
-                  placeholder="Enter Name"
-                  value={studentFormData.studentName}
+                  id="firstName"
+                  name="firstName"
+                  placeholder="Enter First Name"
+                  value={studentFormData.firstName}
                   onChange={handleStudentInputChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   required
@@ -605,38 +659,17 @@ const Batches = () => {
 
               <div>
                 <label
-                  htmlFor="mobileNumber"
+                  htmlFor="lastName"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Mobile Number
+                  Last Name
                 </label>
                 <input
-                  type="tel"
-                  id="mobileNumber"
-                  placeholder="Enter Mobile Number"
-                  name="mobileNumber"
-                  value={studentFormData.mobileNumber}
-                  pattern="[0-9]{10}"
-                  maxLength="10"
-                  onChange={handleMobileChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                  required
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  placeholder="Enter Email"
-                  name="email"
-                  value={studentFormData.email}
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  placeholder="Enter Last Name"
+                  value={studentFormData.lastName}
                   onChange={handleStudentInputChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   required
@@ -645,16 +678,16 @@ const Batches = () => {
 
               <div>
                 <label
-                  htmlFor="address"
+                  htmlFor="studentAddress"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
                   Address
                 </label>
                 <textarea
-                  id="address"
-                  name="address"
+                  id="studentAddress"
+                  name="studentAddress"
                   placeholder="Enter Address"
-                  value={studentFormData.address}
+                  value={studentFormData.studentAddress}
                   onChange={handleStudentInputChange}
                   rows={3}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
@@ -664,17 +697,17 @@ const Batches = () => {
 
               <div>
                 <label
-                  htmlFor="qualification"
+                  htmlFor="studentEmail"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Qualification
+                  Email
                 </label>
                 <input
-                  type="text"
-                  id="qualification"
-                  placeholder="Enter Qualification"
-                  name="qualification"
-                  value={studentFormData.qualification}
+                  type="email"
+                  id="studentEmail"
+                  name="studentEmail"
+                  placeholder="Enter Email"
+                  value={studentFormData.studentEmail}
                   onChange={handleStudentInputChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   required
@@ -683,18 +716,39 @@ const Batches = () => {
 
               <div>
                 <label
-                  htmlFor="feesPaid"
+                  htmlFor="studentMobileNumber"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Fees Paid
+                  Mobile Number
                 </label>
                 <input
-                  type="tel"
-                  id="feesPaid"
-                  placeholder="Enter Fees"
-                  name="feesPaid"
-                  value={studentFormData.feesPaid}
-                  onChange={handleFeesChange}
+                  type="text"
+                  id="studentMobileNumber"
+                  name="studentMobileNumber"
+                  placeholder="Enter Mobile Number"
+                  value={studentFormData.studentMobileNumber}
+                  onChange={handleStudentInputChange}
+                  pattern="[0-9]{10}"
+                  maxLength="10"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="stream"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Stream
+                </label>
+                <input
+                  type="text"
+                  id="stream"
+                  name="stream"
+                  placeholder="Enter Stream"
+                  value={studentFormData.stream}
+                  onChange={handleStudentInputChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   required
                 />
@@ -702,14 +756,15 @@ const Batches = () => {
 
               <div className="flex gap-4 pt-4">
                 <button
-                  type="button"
+                  type="button" // Cancel button doesn't submit the form.
                   onClick={() => setIsStudentModalOpen(false)}
                   className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors duration-200"
                 >
                   Cancel
                 </button>
+
                 <button
-                  type="submit"
+                  type="submit" // Submit button to send the form data.
                   className="flex-1 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors duration-200"
                 >
                   Add Student
