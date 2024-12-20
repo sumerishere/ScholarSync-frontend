@@ -109,7 +109,7 @@ const BatchDetails = () => {
                     <input
                       type="text"
                       name="batchName"
-                      value={batchData.batchName || "NA"}
+                      value={formData.batchName || "NA"}
                       onChange={handleChange}
                       className="form-input w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                     />
@@ -123,7 +123,7 @@ const BatchDetails = () => {
                       readOnly
                       type="text"
                       name="batchCode"
-                      value={batchData.batchId || "NA"}
+                      value={formData.batchId || "NA"}
                       onChange={handleChange}
                       className="form-input w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                     />
@@ -137,7 +137,7 @@ const BatchDetails = () => {
                       type="number"
                       readOnly
                       name="studentCount"
-                      value={batchData.studentCount || 0}
+                      value={formData.studentCount || 0}
                       onChange={handleChange}
                       className="form-input w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                     />
@@ -152,7 +152,7 @@ const BatchDetails = () => {
                     <input
                       type="text"
                       name="subject"
-                      value={batchData.courseName || "NA"}
+                      value={formData.courseName || "NA"}
                       onChange={handleChange}
                       className="form-input w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                     />

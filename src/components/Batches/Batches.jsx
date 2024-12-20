@@ -1,4 +1,5 @@
 import confetti from "canvas-confetti";
+import "./Batches.css";
 import {
   BookOpenText,
   ChevronRight,
@@ -9,11 +10,11 @@ import {
   Video,
   X,
 } from "lucide-react";
-// import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const useDebounce = (value, delay) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -36,6 +37,7 @@ const Batches = () => {
   const debouncedSearchTerm = useDebounce(searchBatch, 500);
   // const [StudentAdded, onStudentAdded] = useState(null);
   const [getBatchId, setBatchId] = useState("");
+  const [loading, setLoading] = useState(false); // State to control loading spinner
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -182,6 +184,7 @@ const Batches = () => {
     if (!validateForm()) {
       return;
     }
+    setLoading(true); // Show the spinner
 
     try {
       const response = await fetch(
@@ -205,9 +208,6 @@ const Batches = () => {
         );
       }
 
-      // const data = await response.json();
-
-      // Show success message
       toast.success("Student Added Successfully!");
 
       // Reset form data
@@ -223,13 +223,11 @@ const Batches = () => {
 
       // Close modal
       setIsStudentModalOpen(false);
-
-      // if (onStudentAdded) {
-      //   onStudentAdded(data);
-      // }
     } catch (error) {
       toast.error(error.message || "Error submitting form!");
       console.error("Error:", error);
+    } finally {
+      setLoading(false); // Hide the spinner
     }
   };
 
@@ -351,6 +349,11 @@ const Batches = () => {
   return (
     <div className="batch-root scholar-batches p-6">
       {/* Header with Add Batch button */}
+      {loading && (
+        <div className="student-registration-form-spinner-overlay">
+          <ClipLoader color="#ffffff" loading={loading} size={100} />
+        </div>
+      )}
 
       <div className="grid mb-10 grid-cols-1  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 p-5">
         <div className="h-[100px] bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 cursor-pointer border border-gray-300">
