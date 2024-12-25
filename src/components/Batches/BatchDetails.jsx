@@ -4,7 +4,9 @@ import { useParams } from "react-router-dom";
 const BatchDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState(null);
+
   const { batchId } = useParams();
+  
   const [batchData, setBatchData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -109,7 +111,7 @@ const BatchDetails = () => {
                     <input
                       type="text"
                       name="batchName"
-                      value={formData.batchName || "NA"}
+                      value={batchData.batchName || "NA"}
                       onChange={handleChange}
                       className="form-input w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                     />
@@ -123,7 +125,7 @@ const BatchDetails = () => {
                       readOnly
                       type="text"
                       name="batchCode"
-                      value={formData.batchId || "NA"}
+                      value={batchData.batchId || "NA"}
                       onChange={handleChange}
                       className="form-input w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                     />
@@ -137,7 +139,7 @@ const BatchDetails = () => {
                       type="number"
                       readOnly
                       name="studentCount"
-                      value={formData.studentCount || 0}
+                      value={batchData.studentCount || 0}
                       onChange={handleChange}
                       className="form-input w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                     />
@@ -152,7 +154,7 @@ const BatchDetails = () => {
                     <input
                       type="text"
                       name="subject"
-                      value={formData.courseName || "NA"}
+                      value={batchData.courseName || "NA"}
                       onChange={handleChange}
                       className="form-input w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                     />

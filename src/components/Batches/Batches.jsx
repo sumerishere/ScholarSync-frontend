@@ -1,10 +1,10 @@
 import confetti from "canvas-confetti";
-import "./Batches.css";
 import {
   BookOpenText,
   ChevronRight,
   FolderClosed,
   Plus,
+  RefreshCcwDot,
   UserPlus,
   Users,
   Video,
@@ -12,9 +12,10 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ClipLoader from "react-spinners/ClipLoader";
+import "./Batches.css";
 
 const useDebounce = (value, delay) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -65,6 +66,7 @@ const Batches = () => {
   const [batchesData, setBatchesData] = useState([]);
 
   const fetchBatches = async () => {
+    setLoading(true);
     try {
       const response = await fetch(
         `http://localhost:8080/api/batch/get-all-batch`
@@ -74,7 +76,17 @@ const Batches = () => {
       setBatchesData(data);
     } catch (error) {
       console.error("Error fetching batches:", error);
+    } finally {
+      setLoading(false); // Hide the spinner
     }
+  };
+
+  useEffect(() => {
+    fetchBatches();
+  }, []);
+
+  const handleRefresh = () => {
+    fetchBatches();
   };
 
   const searchBatches = async (searchTerm) => {
@@ -224,7 +236,9 @@ const Batches = () => {
       // Close modal
       setIsStudentModalOpen(false);
     } catch (error) {
-      toast.error(error.message || "Error submitting form!");
+      toast.error(
+        "An internal unexpected error occurred. Please try again later."
+      );
       console.error("Error:", error);
     } finally {
       setLoading(false); // Hide the spinner
@@ -403,6 +417,7 @@ const Batches = () => {
         <h2 className="text-2xl font-bold text-gray-800">
           Your Batches ({batchesData.length})
         </h2>
+
         <div className="flex">
           <input
             className="w-half px-4 py-1 mr-1 border outline-none  rounded-lg focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400"
@@ -417,6 +432,12 @@ const Batches = () => {
           <button className="scholar-add-student-btn w-half bg-indigo-600 hover:bg-indigo-700 text-white py-1 px-5 rounded-lg transition-colors duration-200">
             Search
           </button>
+
+          <div>
+            <button className="bg-gray px-6 mt-1" onClick={handleRefresh}>
+              <RefreshCcwDot />
+            </button>
+          </div>
         </div>
         <button
           id="add-batch-id"

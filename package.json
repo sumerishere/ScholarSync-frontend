@@ -17,6 +17,7 @@
     "jspdf-autotable": "^3.8.4",
     "lodash": "^4.17.21",
     "lucide-react": "^0.464.0",
+    "mermaid": "^11.4.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.0.2",
