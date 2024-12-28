@@ -61,6 +61,10 @@ const Batches = () => {
     studentMobileNumber: "",
     stream: "",
     batchId: getBatchId,
+    courseType:"",
+    feesPaid : "",
+    discount: "",
+    totalFees:""
   });
 
   const [batchesData, setBatchesData] = useState([]);
@@ -176,6 +180,10 @@ const Batches = () => {
       lastName: "Last Name",
       studentAddress: "Address",
       stream: "Stream",
+      courseType:"",
+      feesPaid : "Fees Paid",
+      discount: "Discount",
+      totalFees:"Total fees"
     };
 
     for (const [field, label] of Object.entries(requiredFields)) {
@@ -231,6 +239,10 @@ const Batches = () => {
         studentMobileNumber: "",
         stream: "",
         batchId: getBatchId,
+        courseType:"",
+        feesPaid : "",
+        discount: "",
+        totalFees:""
       });
 
       // Close modal
@@ -648,7 +660,7 @@ const Batches = () => {
       {/* Student Modal */}
       {isStudentModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+          <div className="bg-white rounded-xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-semibold text-gray-800">
                 Add New Student
@@ -777,6 +789,87 @@ const Batches = () => {
                   required
                 />
               </div>
+
+
+              <div>
+                <label
+                  htmlFor="courseType"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Course Type
+                </label>
+                <input
+                  type="text"
+                  id="courseType"
+                  name="courseType"
+                  placeholder="Enter Course Type"
+                  value={studentFormData.courseType}
+                  onChange={handleStudentInputChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  required
+                />
+              </div>
+
+
+              <div>
+                <label
+                  htmlFor="feesPaid"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Fees paid
+                </label>
+                <input
+                  type="number"
+                  id="feesPaid"
+                  name="feesPaid"
+                  placeholder="Enter Fees paid"
+                  value={studentFormData.feesPaid}
+                  onChange={handleStudentInputChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="discount"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Discount
+                </label>
+                <input
+                  type="text"
+                  id="discount"
+                  name="discount"
+                  placeholder="Enter discount"
+                  value={studentFormData.discount}
+                  onChange={handleStudentInputChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  required
+                />
+              </div>
+
+
+              <div>
+                <label
+                  htmlFor="totalFees"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Total fees
+                </label>
+                <input
+                  type="number"
+                  id="totalFees"
+                  name="totalFees"
+                  placeholder="Enter Total fees"
+                  value={studentFormData.totalFees}
+                  onChange={handleStudentInputChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  required
+                />
+              </div>
+
+
 
               <div className="flex gap-4 pt-4">
                 <button
