@@ -12,6 +12,7 @@ import Invoice from "./components/Invoice/Invoice";
 import LoginForm from "./components/Login/LoginForm";
 import Dashboard from "./components/Dashboard/Dashboard";
 import SignUp from "./components/SignUp/SignUp";
+// import StudentHistory from "./components/History-Component/StudentHistory";
 
 const PrivateRoute = ({ children }) => {
   
@@ -29,7 +30,7 @@ const PrivateRoute = ({ children }) => {
       </div>
     </div>
   ) : (
-    <Navigate to="/login" replace />
+    <Navigate to="/login"/>
   );
 };
 
@@ -104,6 +105,11 @@ function App() {
           }
 
         />
+
+        {/* <Route
+        path = "/student/history/details"
+        element={<StudentHistory/>}
+        /> */}
       </Routes>
     </Router>
   );

@@ -1,11 +1,14 @@
 import { debounce } from "lodash";
-import {AlarmClock, HistoryIcon} from "lucide-react";
+import { AlarmClock, HistoryIcon } from "lucide-react";
 import { useCallback, useState } from "react";
+import StudentHistory from "../History-Component/StudentHistory";
 import "./StudentsDetails.css";
+// import {Link} from "react-router-dom";
 
 const StudentsDetails = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("all");
+  const [selectedStudent, setSelectedStudent] = useState(null);
 
   const getFeeStatus = (feesPaid, totalFees) => {
     const ratio = feesPaid / totalFees;
@@ -190,11 +193,15 @@ const StudentsDetails = () => {
                     </td>
                     <td className="px-6 sticky right-0 bg-white py-4 whitespace-nowrap text-sm">
                       <div className="flex space-x-2">
-                        <button className="px-3 py-1 bg-blue-600 border border-grey-700 text-white text-sm rounded hover:border-black bg-blue-500  transition-colors">
-                          <HistoryIcon/>
+                        <button className="px-3 py-1 bg-blue-600 border border-grey-700 text-white text-sm rounded hover:border-black bg-indigo-600  transition-colors"
+                          onClick={() => setSelectedStudent(student)}
+>
+                          {/* <Link to="/student/history/details" style={{textDecoration:"none"}}> */}
+                          <HistoryIcon />
+                          {/* </Link> */}
                         </button>
                         <button className="px-3 py-1 border border-grey-700 bg-yellow-600 text-white text-sm rounded hover:border-black bg-yellow-500 transition-colors">
-                        <AlarmClock/>
+                          <AlarmClock />
                         </button>
                         <button className="px-6 py-1 border border-grey-700 bg-green-600 text-white text-sm rounded hover:border-black bg-green-500 transition-colors">
                           Pay
@@ -215,6 +222,12 @@ const StudentsDetails = () => {
           </div>
         )}
       </div>
+      <StudentHistory
+        isOpen={!!selectedStudent}
+        onClose={() => setSelectedStudent(null)}
+        studentName={selectedStudent?.studentName}
+        studentId={selectedStudent?.id}
+      />
     </div>
   );
 };
